@@ -18,7 +18,6 @@ class NotesRepositoryImpl implements NotesRepository {
 
   @override
   Future<Result<List<Note>, AppError>> getNotes() {
-    // TODO: implement getNotes
-    throw UnimplementedError();
+    return asyncResultOf(() => _notesLocalDataSource.getNotes());
   }
 }

@@ -7,6 +7,7 @@ import 'package:smart_notes/feature/note/domain/entity/note.dart';
 
 import '../../fake/note_fake.dart';
 import '../../mock/notes_local_data_source_mock.dart';
+import '../../object_builder/note_builder.dart';
 
 void main() {
   late NotesLocalDataSourceMock notesLocalDataSourceMock;
@@ -23,6 +24,8 @@ void main() {
     );
     when(() => notesLocalDataSourceMock.saveNote(any()))
         .thenAnswer((_) async => '');
+    when(() => notesLocalDataSourceMock.getNotes())
+        .thenAnswer((invocation) async => NoteBuilder.buildList());
   });
 
   test('on save note, return success when no error is thrown', () async {
@@ -49,6 +52,25 @@ void main() {
         .thenThrow(GenericError());
 
     final actual = await notesRepository.saveNote(note);
+
+    expect(actual, equals(expected));
+  });
+
+  test(
+      'on get notes, return success with list of notes when no error is thrown',
+      () async {
+    final expected = Result.success(NoteBuilder.buildList());
+
+    final actual = await notesRepository.getNotes();
+
+    expect(actual, equals(expected));
+  });
+
+  test('on get notes, return failure when a error is thrown', () async {
+    final expected = Result.error(GenericError());
+    when(() => notesLocalDataSourceMock.getNotes()).thenThrow(GenericError());
+
+    final actual = await notesRepository.getNotes();
 
     expect(actual, equals(expected));
   });

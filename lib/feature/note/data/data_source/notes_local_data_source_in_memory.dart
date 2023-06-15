@@ -8,4 +8,10 @@ class NotesLocalDataSourceInMemory implements NotesLocalDataSource {
   Future<void> saveNote(Note note) async {
     _inMemoryNotes.add(note);
   }
+
+  @override
+  Future<List<Note>> getNotes() {
+    // TODO: implement getNotes
+    throw UnimplementedError();
+  }
 }

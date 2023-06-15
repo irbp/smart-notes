@@ -15,4 +15,10 @@ class NotesRepositoryImpl implements NotesRepository {
   Future<Result<void, AppError>> saveNote(Note note) async {
     return asyncResultOf(() => _notesLocalDataSource.saveNote(note));
   }
+
+  @override
+  Future<Result<List<Note>, AppError>> getNotes() {
+    // TODO: implement getNotes
+    throw UnimplementedError();
+  }
 }

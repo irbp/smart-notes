@@ -21,7 +21,7 @@ void main() {
     notesRepositoryMock = NotesRepositoryMock();
     saveNote = SaveNoteUseCaseImpl(notesRepository: notesRepositoryMock);
     when(() => notesRepositoryMock.saveNote(any()))
-        .thenAnswer((_) async => Result.success(1));
+        .thenAnswer((_) async => Result.success(''));
   });
 
   test('given an empty title, return an empty title error', () async {
@@ -94,7 +94,7 @@ void main() {
 
   test('given valid parameters, return a success if the repository does',
       () async {
-    final expected = Result.success(1);
+    final expected = Result.success('');
     const params = NoteParams(
       title: 'Test title',
       description: 'Test description',

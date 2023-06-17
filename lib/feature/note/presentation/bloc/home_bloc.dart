@@ -10,7 +10,9 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetNotesUseCase _getNotes;
 
-  HomeBloc(this._getNotes) : super(HomeLoading()) {
+  HomeBloc({required GetNotesUseCase getNotes})
+      : _getNotes = getNotes,
+        super(HomeLoading()) {
     on<InitScreen>(_handleInitScreen);
     on<ClickOnAddButton>(_handleClickOnAddButton);
     on<SnackbarDisplayed>(_handleSnackbarDisplayed);

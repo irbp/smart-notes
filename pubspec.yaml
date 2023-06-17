@@ -17,6 +17,7 @@ dependencies:
   multiple_result: ^5.0.0
   bloc: ^8.0.0
   flutter_bloc: ^8.0.0
+  get_it: ^7.6.0
 
 dev_dependencies:
   flutter_test:

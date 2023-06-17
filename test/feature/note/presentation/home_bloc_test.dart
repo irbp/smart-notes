@@ -20,7 +20,7 @@ void main() {
   });
 
   test('initial state should be loading', () {
-    final expected = HomeLoading();
+    final expected = HomeLoadInProgress();
 
     final actual = homeBloc.state;
     expect(actual, equals(expected));
@@ -29,8 +29,8 @@ void main() {
   blocTest(
     'given init screen event, update state to succes if the notes is loaded with success',
     build: () => homeBloc,
-    act: (bloc) => bloc.add(InitScreen()),
-    expect: () => [HomeSuccess(notes: NoteBuilder.buildList())],
+    act: (bloc) => bloc.add(HomeInitScreen()),
+    expect: () => [HomeLoadSuccess(notes: NoteBuilder.buildList())],
   );
 
   blocTest(
@@ -40,43 +40,44 @@ void main() {
       when(() => getNotesMock())
           .thenAnswer((_) async => Result.error(GenericError()));
     },
-    act: (bloc) => bloc.add(InitScreen()),
-    expect: () => [HomeFailure()],
+    act: (bloc) => bloc.add(HomeInitScreen()),
+    expect: () => [HomeLoadFailure()],
   );
 
   blocTest<HomeBloc, HomeState>(
-    'given click on add button event, update state to show snackbar if the current state is success',
+    'given add button pressed event, update state to show snackbar if the current state is success',
     build: () => homeBloc,
-    act: (bloc) => bloc.add(ClickOnAddButton()),
-    seed: () => HomeSuccess(notes: NoteBuilder.buildList()),
+    act: (bloc) => bloc.add(HomeAddButtonPressed()),
+    seed: () => HomeLoadSuccess(notes: NoteBuilder.buildList()),
     expect: () => [
-      HomeSuccess(notes: NoteBuilder.buildList(), showSnackbar: true),
+      HomeLoadSuccess(notes: NoteBuilder.buildList(), showSnackbar: true),
     ],
   );
 
   blocTest<HomeBloc, HomeState>(
-    'given click on add button event, do not update state to show snackbar if the current state is failure',
+    'given add button pressed event, do not update state to show snackbar if the current state is failure',
     build: () => homeBloc,
-    act: (bloc) => bloc.add(ClickOnAddButton()),
-    seed: () => HomeFailure(),
+    act: (bloc) => bloc.add(HomeAddButtonPressed()),
+    seed: () => HomeLoadFailure(),
     expect: () => [],
   );
 
   blocTest<HomeBloc, HomeState>(
     'given snackbar displayed event, update state to hide snackbar if the current state is success',
     build: () => homeBloc,
-    act: (bloc) => bloc.add(SnackbarDisplayed()),
-    seed: () => HomeSuccess(notes: NoteBuilder.buildList(), showSnackbar: true),
+    act: (bloc) => bloc.add(HomeSnackbarDisplayed()),
+    seed: () =>
+        HomeLoadSuccess(notes: NoteBuilder.buildList(), showSnackbar: true),
     expect: () => [
-      HomeSuccess(notes: NoteBuilder.buildList(), showSnackbar: false),
+      HomeLoadSuccess(notes: NoteBuilder.buildList(), showSnackbar: false),
     ],
   );
 
   blocTest<HomeBloc, HomeState>(
     'given snackbar displayed event, do not update state to hide snackbar if the current state is failure',
     build: () => homeBloc,
-    act: (bloc) => bloc.add(SnackbarDisplayed()),
-    seed: () => HomeFailure(),
+    act: (bloc) => bloc.add(HomeSnackbarDisplayed()),
+    seed: () => HomeLoadFailure(),
     expect: () => [],
   );
 }

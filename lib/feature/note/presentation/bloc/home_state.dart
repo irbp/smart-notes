@@ -7,10 +7,10 @@ sealed class HomeState extends Equatable {
   List<Object> get props => [];
 }
 
-final class HomeLoading extends HomeState {}
+final class HomeLoadInProgress extends HomeState {}
 
-final class HomeSuccess extends HomeState {
-  const HomeSuccess({
+final class HomeLoadSuccess extends HomeState {
+  const HomeLoadSuccess({
     this.notes = const [],
     this.showSnackbar = false,
   });
@@ -21,12 +21,12 @@ final class HomeSuccess extends HomeState {
   @override
   List<Object> get props => [notes, showSnackbar];
 
-  HomeSuccess copyWith({List<Note>? notes, bool? showSnackbar}) {
-    return HomeSuccess(
+  HomeLoadSuccess copyWith({List<Note>? notes, bool? showSnackbar}) {
+    return HomeLoadSuccess(
       notes: notes ?? this.notes,
       showSnackbar: showSnackbar ?? this.showSnackbar,
     );
   }
 }
 
-final class HomeFailure extends HomeState {}
+final class HomeLoadFailure extends HomeState {}

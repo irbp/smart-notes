@@ -7,8 +7,8 @@ sealed class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class InitScreen extends HomeEvent {}
+final class HomeInitScreen extends HomeEvent {}
 
-final class ClickOnAddButton extends HomeEvent {}
+final class HomeAddButtonPressed extends HomeEvent {}
 
-final class SnackbarDisplayed extends HomeEvent {}
+final class HomeSnackbarDisplayed extends HomeEvent {}

@@ -12,35 +12,35 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc({required GetNotesUseCase getNotes})
       : _getNotes = getNotes,
-        super(HomeLoading()) {
-    on<InitScreen>(_handleInitScreen);
-    on<ClickOnAddButton>(_handleClickOnAddButton);
-    on<SnackbarDisplayed>(_handleSnackbarDisplayed);
+        super(HomeLoadInProgress()) {
+    on<HomeInitScreen>(_handleInitScreen);
+    on<HomeAddButtonPressed>(_handleClickOnAddButton);
+    on<HomeSnackbarDisplayed>(_handleSnackbarDisplayed);
   }
 
-  void _handleInitScreen(InitScreen event, Emitter<HomeState> emit) async {
+  void _handleInitScreen(HomeInitScreen event, Emitter<HomeState> emit) async {
     await _getNotes()
-      ..whenSuccess((success) => emit(HomeSuccess(notes: success)))
-      ..whenError((error) => emit(HomeFailure()));
+      ..whenSuccess((success) => emit(HomeLoadSuccess(notes: success)))
+      ..whenError((error) => emit(HomeLoadFailure()));
   }
 
   void _handleClickOnAddButton(
-    ClickOnAddButton event,
+    HomeAddButtonPressed event,
     Emitter<HomeState> emit,
   ) {
-    if (state is! HomeSuccess) {
+    if (state is! HomeLoadSuccess) {
       return;
     }
-    emit((state as HomeSuccess).copyWith(showSnackbar: true));
+    emit((state as HomeLoadSuccess).copyWith(showSnackbar: true));
   }
 
   void _handleSnackbarDisplayed(
-    SnackbarDisplayed event,
+    HomeSnackbarDisplayed event,
     Emitter<HomeState> emit,
   ) {
-    if (state is! HomeSuccess) {
+    if (state is! HomeLoadSuccess) {
       return;
     }
-    emit((state as HomeSuccess).copyWith(showSnackbar: false));
+    emit((state as HomeLoadSuccess).copyWith(showSnackbar: false));
   }
 }

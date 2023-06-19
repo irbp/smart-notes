@@ -7,6 +7,7 @@ class CreateNoteState extends Equatable {
     required this.enableSaveButton,
     required this.showLoadingProgress,
     required this.showError,
+    required this.navigateUpWithSuccess,
   });
 
   final String title;
@@ -14,6 +15,7 @@ class CreateNoteState extends Equatable {
   final bool enableSaveButton;
   final bool showLoadingProgress;
   final bool showError;
+  final bool navigateUpWithSuccess;
 
   CreateNoteState copyWith({
     String? title,
@@ -21,6 +23,7 @@ class CreateNoteState extends Equatable {
     bool? enableSaveButton,
     bool? showLoadingProgress,
     bool? showError,
+    bool? navigateUpWithSuccess,
   }) {
     return CreateNoteState(
       title: title ?? this.title,
@@ -28,6 +31,8 @@ class CreateNoteState extends Equatable {
       enableSaveButton: enableSaveButton ?? this.enableSaveButton,
       showLoadingProgress: showLoadingProgress ?? this.showLoadingProgress,
       showError: showError ?? this.showError,
+      navigateUpWithSuccess:
+          navigateUpWithSuccess ?? this.navigateUpWithSuccess,
     );
   }
 
@@ -38,6 +43,7 @@ class CreateNoteState extends Equatable {
       enableSaveButton: false,
       showLoadingProgress: false,
       showError: false,
+      navigateUpWithSuccess: false,
     );
   }
 
@@ -48,5 +54,6 @@ class CreateNoteState extends Equatable {
         enableSaveButton,
         showLoadingProgress,
         showError,
+        navigateUpWithSuccess,
       ];
 }

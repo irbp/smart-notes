@@ -18,22 +18,49 @@ class CreateNoteBloc extends Bloc<CreateNoteEvent, CreateNoteState> {
 
   void _handleTitleChanged(
     CreateNoteTitleChanged event,
-    Emitter<CreateNoteState> emitter,
+    Emitter<CreateNoteState> emit,
   ) {
-    throw UnimplementedError();
+    emit(state.copyWith(
+      title: event.title,
+      enableSaveButton: event.title.isNotEmpty && state.description.isNotEmpty,
+    ));
   }
 
   void _handleDescriptionChanged(
     CreateNoteDescriptionChanged event,
-    Emitter<CreateNoteState> emitter,
+    Emitter<CreateNoteState> emit,
   ) {
-    throw UnimplementedError();
+    emit(state.copyWith(
+      description: event.description,
+      enableSaveButton: event.description.isNotEmpty && state.title.isNotEmpty,
+    ));
   }
 
   void _handleCreateNoteButtonPressed(
     CreateNoteButtonPressed event,
-    Emitter<CreateNoteState> emitter,
-  ) {
-    throw UnimplementedError();
+    Emitter<CreateNoteState> emit,
+  ) async {
+    emit(state.copyWith(showLoadingProgress: true));
+    final noteParams = NoteParams(
+      title: state.title,
+      description: state.description,
+    );
+    await _saveNote(noteParams)
+      ..whenSuccess(
+        (success) => emit(
+          state.copyWith(
+            showLoadingProgress: false,
+            navigateUpWithSuccess: true,
+          ),
+        ),
+      )
+      ..whenError(
+        (error) => emit(
+          state.copyWith(
+            showLoadingProgress: false,
+            showError: true,
+          ),
+        ),
+      );
   }
 }

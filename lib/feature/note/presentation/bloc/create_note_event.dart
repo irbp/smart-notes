@@ -8,12 +8,12 @@ sealed class CreateNoteEvent extends Equatable {
 }
 
 final class CreateNoteTitleChanged extends CreateNoteEvent {
-  const CreateNoteTitleChanged(this.email);
+  const CreateNoteTitleChanged(this.title);
 
-  final String email;
+  final String title;
 
   @override
-  List<Object> get props => [email];
+  List<Object> get props => [title];
 }
 
 final class CreateNoteDescriptionChanged extends CreateNoteEvent {

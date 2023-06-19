@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_notes/di/setup_di.dart';
+import 'package:smart_notes/feature/note/navigation/note_navigation.dart';
 import 'package:smart_notes/ui/color_schemes.dart';
 import 'package:smart_notes/ui/strings.dart';
-
-import 'feature/note/presentation/view/home_page.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({super.key}) {
@@ -22,7 +21,8 @@ class MyApp extends StatelessWidget {
         colorScheme: darkColorScheme,
         useMaterial3: true,
       ),
-      home: HomePage(),
+      routes: NoteNavigation.getRoutes(),
+      initialRoute: NoteNavigation.initialRoute,
     );
   }
 }

@@ -45,17 +45,18 @@ void main() {
   );
 
   blocTest<HomeBloc, HomeState>(
-    'given add button pressed event, update state to show snackbar if the current state is success',
+    'given add button pressed event, update state to navigate to create note page if the current state is success',
     build: () => homeBloc,
     act: (bloc) => bloc.add(HomeAddButtonPressed()),
     seed: () => HomeLoadSuccess(notes: NoteBuilder.buildList()),
     expect: () => [
-      HomeLoadSuccess(notes: NoteBuilder.buildList(), showSnackbar: true),
+      HomeLoadSuccess(
+          notes: NoteBuilder.buildList(), navigateToCreateNotePage: true),
     ],
   );
 
   blocTest<HomeBloc, HomeState>(
-    'given add button pressed event, do not update state to show snackbar if the current state is failure',
+    'given add button pressed event, do not update state to navigate to create note page if the current state is failure',
     build: () => homeBloc,
     act: (bloc) => bloc.add(HomeAddButtonPressed()),
     seed: () => HomeLoadFailure(),
@@ -63,20 +64,21 @@ void main() {
   );
 
   blocTest<HomeBloc, HomeState>(
-    'given snackbar displayed event, update state to hide snackbar if the current state is success',
+    'given navigation done event, update state to not navigate to create note page if the current state is success',
     build: () => homeBloc,
-    act: (bloc) => bloc.add(HomeSnackbarDisplayed()),
-    seed: () =>
-        HomeLoadSuccess(notes: NoteBuilder.buildList(), showSnackbar: true),
+    act: (bloc) => bloc.add(HomeNavigationDone()),
+    seed: () => HomeLoadSuccess(
+        notes: NoteBuilder.buildList(), navigateToCreateNotePage: true),
     expect: () => [
-      HomeLoadSuccess(notes: NoteBuilder.buildList(), showSnackbar: false),
+      HomeLoadSuccess(
+          notes: NoteBuilder.buildList(), navigateToCreateNotePage: false),
     ],
   );
 
   blocTest<HomeBloc, HomeState>(
-    'given snackbar displayed event, do not update state to hide snackbar if the current state is failure',
+    'given navigation done event, do not update state to navigate to create note page if the current state is failure',
     build: () => homeBloc,
-    act: (bloc) => bloc.add(HomeSnackbarDisplayed()),
+    act: (bloc) => bloc.add(HomeNavigationDone()),
     seed: () => HomeLoadFailure(),
     expect: () => [],
   );

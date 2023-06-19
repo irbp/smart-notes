@@ -12,19 +12,23 @@ final class HomeLoadInProgress extends HomeState {}
 final class HomeLoadSuccess extends HomeState {
   const HomeLoadSuccess({
     this.notes = const [],
-    this.showSnackbar = false,
+    this.navigateToCreateNotePage = false,
   });
 
   final List<Note> notes;
-  final bool showSnackbar;
+  final bool navigateToCreateNotePage;
 
   @override
-  List<Object> get props => [notes, showSnackbar];
+  List<Object> get props => [notes, navigateToCreateNotePage];
 
-  HomeLoadSuccess copyWith({List<Note>? notes, bool? showSnackbar}) {
+  HomeLoadSuccess copyWith({
+    List<Note>? notes,
+    bool? navigateToCreateNotePage,
+  }) {
     return HomeLoadSuccess(
       notes: notes ?? this.notes,
-      showSnackbar: showSnackbar ?? this.showSnackbar,
+      navigateToCreateNotePage:
+          navigateToCreateNotePage ?? this.navigateToCreateNotePage,
     );
   }
 }

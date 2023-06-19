@@ -11,4 +11,4 @@ final class HomeInitScreen extends HomeEvent {}
 
 final class HomeAddButtonPressed extends HomeEvent {}
 
-final class HomeSnackbarDisplayed extends HomeEvent {}
+final class HomeNavigationDone extends HomeEvent {}

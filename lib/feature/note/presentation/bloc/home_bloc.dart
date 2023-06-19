@@ -15,7 +15,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         super(HomeLoadInProgress()) {
     on<HomeInitScreen>(_handleInitScreen);
     on<HomeAddButtonPressed>(_handleClickOnAddButton);
-    on<HomeSnackbarDisplayed>(_handleSnackbarDisplayed);
+    on<HomeNavigationDone>(_handleSnackbarDisplayed);
   }
 
   void _handleInitScreen(HomeInitScreen event, Emitter<HomeState> emit) async {
@@ -31,16 +31,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (state is! HomeLoadSuccess) {
       return;
     }
-    emit((state as HomeLoadSuccess).copyWith(showSnackbar: true));
+    emit((state as HomeLoadSuccess).copyWith(navigateToCreateNotePage: true));
   }
 
   void _handleSnackbarDisplayed(
-    HomeSnackbarDisplayed event,
+    HomeNavigationDone event,
     Emitter<HomeState> emit,
   ) {
     if (state is! HomeLoadSuccess) {
       return;
     }
-    emit((state as HomeLoadSuccess).copyWith(showSnackbar: false));
+    emit((state as HomeLoadSuccess).copyWith(navigateToCreateNotePage: false));
   }
 }

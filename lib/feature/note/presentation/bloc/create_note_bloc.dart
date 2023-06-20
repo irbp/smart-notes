@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:smart_notes/core/presentation/ui_error/error_mapper.dart';
 import 'package:smart_notes/feature/note/domain/use_case/save_note_use_case.dart';
 
 part 'create_note_event.dart';
@@ -7,9 +8,13 @@ part 'create_note_state.dart';
 
 class CreateNoteBloc extends Bloc<CreateNoteEvent, CreateNoteState> {
   final SaveNoteUseCase _saveNote;
+  final ErrorMapper _errorMapper;
 
-  CreateNoteBloc({required SaveNoteUseCase saveNote})
-      : _saveNote = saveNote,
+  CreateNoteBloc({
+    required SaveNoteUseCase saveNote,
+    required ErrorMapper errorMapper,
+  })  : _saveNote = saveNote,
+        _errorMapper = errorMapper,
         super(CreateNoteState.initialState()) {
     on<CreateNoteTitleChanged>(_handleTitleChanged);
     on<CreateNoteDescriptionChanged>(_handleDescriptionChanged);
@@ -23,7 +28,7 @@ class CreateNoteBloc extends Bloc<CreateNoteEvent, CreateNoteState> {
     emit(state.copyWith(
       title: event.title,
       enableSaveButton: event.title.isNotEmpty && state.description.isNotEmpty,
-      showError: false,
+      error: '',
     ));
   }
 
@@ -34,7 +39,7 @@ class CreateNoteBloc extends Bloc<CreateNoteEvent, CreateNoteState> {
     emit(state.copyWith(
       description: event.description,
       enableSaveButton: event.description.isNotEmpty && state.title.isNotEmpty,
-      showError: false,
+      error: '',
     ));
   }
 
@@ -60,7 +65,7 @@ class CreateNoteBloc extends Bloc<CreateNoteEvent, CreateNoteState> {
         (error) => emit(
           state.copyWith(
             showLoadingProgress: false,
-            showError: true,
+            error: _errorMapper.fromAppError(error),
           ),
         ),
       );

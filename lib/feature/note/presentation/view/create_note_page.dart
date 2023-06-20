@@ -39,12 +39,12 @@ class CreateNoteForm extends StatelessWidget {
     final createNoteBloc = BlocProvider.of<CreateNoteBloc>(context);
     return BlocListener<CreateNoteBloc, CreateNoteState>(
       listener: (context, state) {
-        if (state.showError) {
+        if (state.error.isNotEmpty) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(
-                content: Text('Deu ruim!'),
+              SnackBar(
+                content: Text(state.error),
               ),
             );
         }

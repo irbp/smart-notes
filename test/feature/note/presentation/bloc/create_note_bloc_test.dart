@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:smart_notes/core/error/app_error.dart';
+import 'package:smart_notes/core/presentation/ui_error/error_mapper.dart';
+import 'package:smart_notes/core/presentation/ui_error/error_strings.dart';
 import 'package:smart_notes/feature/note/presentation/bloc/create_note_bloc.dart';
 
 import '../../fake/note_params_fake.dart';
@@ -10,6 +12,7 @@ import '../../mock/save_note_use_case_mock.dart';
 
 void main() {
   late SaveNoteUseCaseMock saveNote;
+  late ErrorMapper errorMapper;
   late CreateNoteBloc createNoteBloc;
 
   setUpAll(() {
@@ -18,7 +21,11 @@ void main() {
 
   setUp(() {
     saveNote = SaveNoteUseCaseMock();
-    createNoteBloc = CreateNoteBloc(saveNote: saveNote);
+    errorMapper = ErrorMapper();
+    createNoteBloc = CreateNoteBloc(
+      saveNote: saveNote,
+      errorMapper: errorMapper,
+    );
     when(() => saveNote(any())).thenAnswer((_) async => Result.success(''));
   });
 
@@ -93,7 +100,7 @@ void main() {
     act: (bloc) => bloc.add(CreateNoteButtonPressed()),
     expect: () => [
       createValidState().copyWith(showLoadingProgress: true),
-      createValidState().copyWith(showError: true),
+      createValidState().copyWith(error: ErrorStrings.genericError),
     ],
   );
 }

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:smart_notes/core/presentation/ui_error/error_mapper.dart';
 import 'package:smart_notes/feature/note/domain/use_case/save_note_use_case.dart';
+import 'package:smart_notes/ui/strings.dart';
 
 part 'create_note_event.dart';
 part 'create_note_state.dart';
@@ -58,6 +59,7 @@ class CreateNoteBloc extends Bloc<CreateNoteEvent, CreateNoteState> {
           state.copyWith(
             showLoadingProgress: false,
             navigateUpWithSuccess: true,
+            successMessage: Strings.createNoteSuccess,
           ),
         ),
       )

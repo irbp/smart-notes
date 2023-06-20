@@ -40,13 +40,10 @@ class CreateNoteForm extends StatelessWidget {
     return BlocListener<CreateNoteBloc, CreateNoteState>(
       listener: (context, state) {
         if (state.errorMessage.isNotEmpty) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage),
-              ),
-            );
+          showSnackbar(context, state.errorMessage);
+        }
+        if (state.successMessage.isNotEmpty) {
+          showSnackbar(context, state.successMessage);
         }
         if (state.navigateUpWithSuccess) {
           Navigator.of(context).pop();
@@ -80,6 +77,16 @@ class CreateNoteForm extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void showSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(message),
+        ),
+      );
   }
 }
 

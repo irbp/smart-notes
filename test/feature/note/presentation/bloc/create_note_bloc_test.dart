@@ -6,6 +6,7 @@ import 'package:smart_notes/core/error/app_error.dart';
 import 'package:smart_notes/core/presentation/ui_error/error_mapper.dart';
 import 'package:smart_notes/core/presentation/ui_error/error_strings.dart';
 import 'package:smart_notes/feature/note/presentation/bloc/create_note_bloc.dart';
+import 'package:smart_notes/ui/strings.dart';
 
 import '../../fake/note_params_fake.dart';
 import '../../mock/save_note_use_case_mock.dart';
@@ -85,7 +86,10 @@ void main() {
     act: (bloc) => bloc.add(CreateNoteButtonPressed()),
     expect: () => [
       createValidState().copyWith(showLoadingProgress: true),
-      createValidState().copyWith(navigateUpWithSuccess: true),
+      createValidState().copyWith(
+        navigateUpWithSuccess: true,
+        successMessage: Strings.createNoteSuccess,
+      ),
     ],
   );
 

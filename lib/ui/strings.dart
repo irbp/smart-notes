@@ -10,4 +10,5 @@ class Strings {
   static const createNoteTooLongTitleError = 'Title is too long.';
   static const createNoteEmptyDescriptionError = 'Description cannot be empty.';
   static const createNoteTooLongDescriptionError = 'Description is too long.';
+  static const createNoteSuccess = 'Note created!';
 }

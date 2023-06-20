@@ -5,8 +5,8 @@ import 'package:multiple_result/multiple_result.dart';
 import 'package:smart_notes/core/error/app_error.dart';
 import 'package:smart_notes/feature/note/presentation/bloc/create_note_bloc.dart';
 
-import '../fake/note_params_fake.dart';
-import '../mock/save_note_use_case_mock.dart';
+import '../../fake/note_params_fake.dart';
+import '../../mock/save_note_use_case_mock.dart';
 
 void main() {
   late SaveNoteUseCaseMock saveNote;

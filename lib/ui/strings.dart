@@ -6,4 +6,8 @@ class Strings {
   static const createNoteTextFieldTitle = 'Title';
   static const createNoteTextFieldDescription = 'Description';
   static const createNoteButtonSaveNote = 'Save note';
+  static const createNoteEmptyTitleError = 'Title cannot be empty.';
+  static const createNoteTooLongTitleError = 'Title is too long.';
+  static const createNoteEmptyDescriptionError = 'Description cannot be empty.';
+  static const createNoteTooLongDescriptionError = 'Description is too long.';
 }

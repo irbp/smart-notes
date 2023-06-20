@@ -5,8 +5,8 @@ import 'package:multiple_result/multiple_result.dart';
 import 'package:smart_notes/core/error/app_error.dart';
 import 'package:smart_notes/feature/note/presentation/bloc/home_bloc.dart';
 
-import '../mock/get_notes_use_case_mock.dart';
-import '../object_builder/note_builder.dart';
+import '../../mock/get_notes_use_case_mock.dart';
+import '../../object_builder/note_builder.dart';
 
 void main() {
   late GetNotesUseCaseMock getNotesMock;

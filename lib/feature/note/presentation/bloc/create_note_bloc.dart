@@ -23,6 +23,7 @@ class CreateNoteBloc extends Bloc<CreateNoteEvent, CreateNoteState> {
     emit(state.copyWith(
       title: event.title,
       enableSaveButton: event.title.isNotEmpty && state.description.isNotEmpty,
+      showError: false,
     ));
   }
 
@@ -33,6 +34,7 @@ class CreateNoteBloc extends Bloc<CreateNoteEvent, CreateNoteState> {
     emit(state.copyWith(
       description: event.description,
       enableSaveButton: event.description.isNotEmpty && state.title.isNotEmpty,
+      showError: false,
     ));
   }
 

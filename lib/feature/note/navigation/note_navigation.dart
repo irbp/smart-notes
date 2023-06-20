@@ -10,7 +10,7 @@ class NoteNavigation {
   static Map<String, Widget Function(BuildContext)> getRoutes() {
     return {
       homeRoute: (context) => HomePage(),
-      createNoteRoute: (context) => const CreateNotePage()
+      createNoteRoute: (context) => CreateNotePage()
     };
   }
 }

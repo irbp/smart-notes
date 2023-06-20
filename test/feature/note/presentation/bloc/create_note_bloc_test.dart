@@ -100,7 +100,7 @@ void main() {
     act: (bloc) => bloc.add(CreateNoteButtonPressed()),
     expect: () => [
       createValidState().copyWith(showLoadingProgress: true),
-      createValidState().copyWith(error: ErrorStrings.genericError),
+      createValidState().copyWith(errorMessage: ErrorStrings.genericError),
     ],
   );
 }

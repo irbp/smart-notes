@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:smart_notes/core/error/app_error.dart';
 import 'package:smart_notes/feature/note/domain/entity/note.dart';
@@ -5,6 +6,7 @@ import 'package:smart_notes/feature/note/domain/error/save_note_error.dart';
 import 'package:smart_notes/feature/note/domain/repository/notes_repository.dart';
 import 'package:smart_notes/feature/note/domain/use_case/save_note_use_case.dart';
 
+@Injectable(as: SaveNoteUseCase)
 class SaveNoteUseCaseImpl implements SaveNoteUseCase {
   SaveNoteUseCaseImpl({required NotesRepository notesRepository})
       : _notesRepository = notesRepository;

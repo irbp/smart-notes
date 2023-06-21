@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:smart_notes/core/presentation/ui_error/domain_error_mapper.dart';
 import 'package:smart_notes/feature/note/domain/error/save_note_error.dart';
 import 'package:smart_notes/ui/strings.dart';
 
+@injectable
 class SaveNoteErrorMapper extends DomainErrorMapper<SaveNoteError> {
   @override
   String fromDomainError(SaveNoteError error) {

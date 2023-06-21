@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smart_notes/di/setup_di.dart';
 import 'package:smart_notes/feature/note/navigation/note_navigation.dart';
 import 'package:smart_notes/ui/color_schemes.dart';
 import 'package:smart_notes/ui/strings.dart';
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key}) {
-    registerAppDependencies();
-  }
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

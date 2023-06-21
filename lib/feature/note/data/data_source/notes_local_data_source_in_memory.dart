@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:injectable/injectable.dart';
 import 'package:smart_notes/feature/note/data/data_source/notes_local_data_source.dart';
 import 'package:smart_notes/feature/note/domain/entity/note.dart';
 
+@LazySingleton(as: NotesLocalDataSource)
 class NotesLocalDataSourceInMemory implements NotesLocalDataSource {
   final _inMemoryNotesStreamController = StreamController<List<Note>>()
     ..add([]);

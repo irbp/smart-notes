@@ -1,5 +1,8 @@
-import 'package:smart_notes/feature/note/di/setup_note_di.dart';
+import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
+import 'package:smart_notes/di/setup_di.config.dart';
 
-void registerAppDependencies() {
-  registerNoteFeatureDependencies();
-}
+final getIt = GetIt.instance;
+
+@injectableInit
+void configureDependencies() => getIt.init();

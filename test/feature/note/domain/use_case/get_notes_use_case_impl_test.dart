@@ -15,7 +15,7 @@ void main() {
   setUp(() {
     notesRepositoryMock = NotesRepositoryMock();
     getNotes = GetNotesUseCaseImpl(notesRepository: notesRepositoryMock);
-    when(() => notesRepositoryMock.getNotes())
+    when(() => notesRepositoryMock.getNotesStream())
         .thenAnswer((_) async => Result.success(NoteBuilder.buildList()));
   });
 
@@ -30,7 +30,7 @@ void main() {
 
   test('when get notes, return a failure if the repository does', () async {
     final Result<List<Note>, AppError> expected = Result.error(GenericError());
-    when(() => notesRepositoryMock.getNotes())
+    when(() => notesRepositoryMock.getNotesStream())
         .thenAnswer((_) async => expected);
 
     final actual = await getNotes();

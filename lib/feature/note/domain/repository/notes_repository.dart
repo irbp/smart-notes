@@ -6,5 +6,5 @@ import '../entity/note.dart';
 abstract class NotesRepository {
   Future<Result<void, AppError>> saveNote(Note note);
 
-  Future<Result<List<Note>, AppError>> getNotes();
+  Stream<List<Note>> getNotesStream();
 }

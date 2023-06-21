@@ -17,7 +17,5 @@ class NotesRepositoryImpl implements NotesRepository {
   }
 
   @override
-  Future<Result<List<Note>, AppError>> getNotes() {
-    return asyncResultOf(() => _notesLocalDataSource.getNotes());
-  }
+  Stream<List<Note>> getNotesStream() => _notesLocalDataSource.getNotesStream();
 }

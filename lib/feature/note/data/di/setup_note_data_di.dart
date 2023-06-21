@@ -6,7 +6,7 @@ import '../data_source/notes_local_data_source_in_memory.dart';
 import '../repository/notes_repository_impl.dart';
 
 void registerNoteDataDependencies() {
-  GetIt.I.registerFactory<NotesLocalDataSource>(
+  GetIt.I.registerLazySingleton<NotesLocalDataSource>(
     () => NotesLocalDataSourceInMemory(),
   );
   GetIt.I.registerFactory<NotesRepository>(

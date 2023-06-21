@@ -24,7 +24,7 @@ void main() {
     );
     when(() => notesLocalDataSourceMock.saveNote(any()))
         .thenAnswer((_) async => '');
-    when(() => notesLocalDataSourceMock.getNotes())
+    when(() => notesLocalDataSourceMock.getNotesStream())
         .thenAnswer((invocation) async => NoteBuilder.buildList());
   });
 
@@ -61,16 +61,17 @@ void main() {
       () async {
     final expected = Result.success(NoteBuilder.buildList());
 
-    final actual = await notesRepository.getNotes();
+    final actual = await notesRepository.getNotesStream();
 
     expect(actual, equals(expected));
   });
 
   test('on get notes, return failure when a error is thrown', () async {
     final expected = Result.error(GenericError());
-    when(() => notesLocalDataSourceMock.getNotes()).thenThrow(GenericError());
+    when(() => notesLocalDataSourceMock.getNotesStream())
+        .thenThrow(GenericError());
 
-    final actual = await notesRepository.getNotes();
+    final actual = await notesRepository.getNotesStream();
 
     expect(actual, equals(expected));
   });

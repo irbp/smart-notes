@@ -10,14 +10,12 @@ import 'home_loading_view.dart';
 import 'home_success_view.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-  final homeBloc = GetIt.I<HomeBloc>()..add(HomeInitScreen());
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => homeBloc,
+      create: (context) => GetIt.I<HomeBloc>()..add(HomeInitScreen()),
       child: const HomeView(),
     );
   }
@@ -30,8 +28,12 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeBloc = BlocProvider.of<HomeBloc>(context);
     return BlocListener<HomeBloc, HomeState>(
+      listenWhen: (previous, current) {
+        return previous.navigateToCreateNotePage !=
+            current.navigateToCreateNotePage;
+      },
       listener: (context, state) {
-        if (state is HomeLoadSuccess && state.navigateToCreateNotePage) {
+        if (state.navigateToCreateNotePage) {
           Navigator.of(context).pushNamed(NoteNavigation.createNoteRoute);
           homeBloc.add(HomeNavigationDone());
         }
@@ -43,10 +45,10 @@ class HomeView extends StatelessWidget {
         ),
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            return switch (state) {
-              HomeLoadInProgress() => const HomeLoadingView(),
-              HomeLoadSuccess() => HomeSuccessView(state.notes),
-              HomeLoadFailure() => const HomeFailureView()
+            return switch (state.status) {
+              HomeStatus.success => HomeSuccessView(state.notes),
+              HomeStatus.failure => const HomeFailureView(),
+              _ => const HomeLoadingView()
             };
           },
         ),

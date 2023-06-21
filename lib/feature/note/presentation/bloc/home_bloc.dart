@@ -8,39 +8,50 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final GetNotesUseCase _getNotes;
-
   HomeBloc({required GetNotesUseCase getNotes})
       : _getNotes = getNotes,
-        super(HomeLoadInProgress()) {
+        super(const HomeState()) {
     on<HomeInitScreen>(_handleInitScreen);
     on<HomeAddButtonPressed>(_handleClickOnAddButton);
-    on<HomeNavigationDone>(_handleSnackbarDisplayed);
+    on<HomeNavigationDone>(_handleNavigationDone);
   }
 
-  void _handleInitScreen(HomeInitScreen event, Emitter<HomeState> emit) async {
-    await _getNotes()
-      ..whenSuccess((success) => emit(HomeLoadSuccess(notes: success)))
-      ..whenError((error) => emit(HomeLoadFailure()));
+  final GetNotesUseCase _getNotes;
+
+  Future<void> _handleInitScreen(
+    HomeInitScreen event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(state.copyWith(status: HomeStatus.loading));
+    await emit.forEach(
+      _getNotes(),
+      onData: (notes) {
+        return state.copyWith(
+          status: HomeStatus.success,
+          notes: notes,
+        );
+      },
+      onError: (_, __) => state.copyWith(status: HomeStatus.failure),
+    );
   }
 
-  void _handleClickOnAddButton(
+  Future<void> _handleClickOnAddButton(
     HomeAddButtonPressed event,
     Emitter<HomeState> emit,
-  ) {
-    if (state is! HomeLoadSuccess) {
+  ) async {
+    if (state.status != HomeStatus.success) {
       return;
     }
-    emit((state as HomeLoadSuccess).copyWith(navigateToCreateNotePage: true));
+    emit(state.copyWith(navigateToCreateNotePage: true));
   }
 
-  void _handleSnackbarDisplayed(
+  void _handleNavigationDone(
     HomeNavigationDone event,
     Emitter<HomeState> emit,
   ) {
-    if (state is! HomeLoadSuccess) {
+    if (state.status != HomeStatus.success) {
       return;
     }
-    emit((state as HomeLoadSuccess).copyWith(navigateToCreateNotePage: false));
+    emit(state.copyWith(navigateToCreateNotePage: false));
   }
 }

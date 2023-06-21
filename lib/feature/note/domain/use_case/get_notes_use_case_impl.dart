@@ -11,7 +11,5 @@ class GetNotesUseCaseImpl implements GetNotesUseCase {
   final NotesRepository _notesRepository;
 
   @override
-  Future<Result<List<Note>, AppError>> call() async {
-    return await _notesRepository.getNotes();
-  }
+  Stream<List<Note>> call() => _notesRepository.getNotesStream();
 }

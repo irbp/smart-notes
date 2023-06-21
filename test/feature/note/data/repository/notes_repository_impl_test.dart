@@ -24,8 +24,11 @@ void main() {
     );
     when(() => notesLocalDataSourceMock.saveNote(any()))
         .thenAnswer((_) async => '');
-    when(() => notesLocalDataSourceMock.getNotesStream())
-        .thenAnswer((invocation) async => NoteBuilder.buildList());
+    when(() => notesLocalDataSourceMock.getNotesStream()).thenAnswer(
+      (_) async* {
+        yield NoteBuilder.buildList();
+      },
+    );
   });
 
   test('on save note, return success when no error is thrown', () async {
@@ -59,20 +62,10 @@ void main() {
   test(
       'on get notes, return success with list of notes when no error is thrown',
       () async {
-    final expected = Result.success(NoteBuilder.buildList());
+    final expected = NoteBuilder.buildList();
 
-    final actual = await notesRepository.getNotesStream();
+    final actual = notesRepository.getNotesStream();
 
-    expect(actual, equals(expected));
-  });
-
-  test('on get notes, return failure when a error is thrown', () async {
-    final expected = Result.error(GenericError());
-    when(() => notesLocalDataSourceMock.getNotesStream())
-        .thenThrow(GenericError());
-
-    final actual = await notesRepository.getNotesStream();
-
-    expect(actual, equals(expected));
+    expect(actual, emitsInOrder([expected]));
   });
 }

@@ -1,7 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:multiple_result/multiple_result.dart';
 import 'package:smart_notes/core/error/app_error.dart';
 import 'package:smart_notes/feature/note/presentation/bloc/home_bloc.dart';
 
@@ -15,12 +14,13 @@ void main() {
   setUp(() {
     getNotesMock = GetNotesUseCaseMock();
     homeBloc = HomeBloc(getNotes: getNotesMock);
-    when(() => getNotesMock())
-        .thenAnswer((_) async => Result.success(NoteBuilder.buildList()));
+    when(() => getNotesMock()).thenAnswer((_) async* {
+      yield NoteBuilder.buildList();
+    });
   });
 
-  test('initial state should be loading', () {
-    final expected = HomeLoadInProgress();
+  test('initial state should be initial', () {
+    const expected = HomeState();
 
     final actual = homeBloc.state;
     expect(actual, equals(expected));
@@ -30,56 +30,78 @@ void main() {
     'given init screen event, update state to succes if the notes is loaded with success',
     build: () => homeBloc,
     act: (bloc) => bloc.add(HomeInitScreen()),
-    expect: () => [HomeLoadSuccess(notes: NoteBuilder.buildList())],
+    expect: () => [
+      const HomeState(status: HomeStatus.loading),
+      HomeState(
+        status: HomeStatus.success,
+        notes: NoteBuilder.buildList(),
+      ),
+    ],
   );
 
   blocTest(
     'given init screen event, update state to failure if the notes is not loaded with success',
     build: () => homeBloc,
     setUp: () {
-      when(() => getNotesMock())
-          .thenAnswer((_) async => Result.error(GenericError()));
+      when(() => getNotesMock()).thenAnswer((_) async* {
+        throw GenericError();
+      });
     },
     act: (bloc) => bloc.add(HomeInitScreen()),
-    expect: () => [HomeLoadFailure()],
-  );
-
-  blocTest<HomeBloc, HomeState>(
-    'given add button pressed event, update state to navigate to create note page if the current state is success',
-    build: () => homeBloc,
-    act: (bloc) => bloc.add(HomeAddButtonPressed()),
-    seed: () => HomeLoadSuccess(notes: NoteBuilder.buildList()),
     expect: () => [
-      HomeLoadSuccess(
-          notes: NoteBuilder.buildList(), navigateToCreateNotePage: true),
+      const HomeState(status: HomeStatus.loading),
+      const HomeState(status: HomeStatus.failure),
     ],
   );
 
   blocTest<HomeBloc, HomeState>(
-    'given add button pressed event, do not update state to navigate to create note page if the current state is failure',
+    'given add button pressed event, update state to navigate to create note page if the current status is success',
     build: () => homeBloc,
     act: (bloc) => bloc.add(HomeAddButtonPressed()),
-    seed: () => HomeLoadFailure(),
+    seed: () => HomeState(
+      status: HomeStatus.success,
+      notes: NoteBuilder.buildList(),
+    ),
+    expect: () => [
+      HomeState(
+        status: HomeStatus.success,
+        notes: NoteBuilder.buildList(),
+        navigateToCreateNotePage: true,
+      ),
+    ],
+  );
+
+  blocTest<HomeBloc, HomeState>(
+    'given add button pressed event, do not update state to navigate to create note page if the current status is failure',
+    build: () => homeBloc,
+    act: (bloc) => bloc.add(HomeAddButtonPressed()),
+    seed: () => const HomeState(status: HomeStatus.failure),
     expect: () => [],
   );
 
   blocTest<HomeBloc, HomeState>(
-    'given navigation done event, update state to not navigate to create note page if the current state is success',
+    'given navigation done event, update state to not navigate to create note page if the current status is success',
     build: () => homeBloc,
     act: (bloc) => bloc.add(HomeNavigationDone()),
-    seed: () => HomeLoadSuccess(
-        notes: NoteBuilder.buildList(), navigateToCreateNotePage: true),
+    seed: () => HomeState(
+      status: HomeStatus.success,
+      notes: NoteBuilder.buildList(),
+      navigateToCreateNotePage: true,
+    ),
     expect: () => [
-      HomeLoadSuccess(
-          notes: NoteBuilder.buildList(), navigateToCreateNotePage: false),
+      HomeState(
+        status: HomeStatus.success,
+        notes: NoteBuilder.buildList(),
+        navigateToCreateNotePage: false,
+      ),
     ],
   );
 
   blocTest<HomeBloc, HomeState>(
-    'given navigation done event, do not update state to navigate to create note page if the current state is failure',
+    'given navigation done event, do not update state to navigate to create note page if the current status is failure',
     build: () => homeBloc,
     act: (bloc) => bloc.add(HomeNavigationDone()),
-    seed: () => HomeLoadFailure(),
+    seed: () => const HomeState(status: HomeStatus.failure),
     expect: () => [],
   );
 }

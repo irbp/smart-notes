@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:smart_notes/feature/note/presentation/view/create_note_page.dart';
-import 'package:smart_notes/feature/note/presentation/view/home_page.dart';
+import 'package:smart_notes/feature/note/presentation/page/create_note_page.dart';
+import 'package:smart_notes/feature/note/presentation/page/home_page.dart';
 
 class NoteNavigation {
   static const homeRoute = '/';

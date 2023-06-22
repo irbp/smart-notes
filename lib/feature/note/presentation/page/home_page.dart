@@ -5,9 +5,9 @@ import 'package:smart_notes/feature/note/navigation/note_navigation.dart';
 import 'package:smart_notes/feature/note/presentation/bloc/home_bloc.dart';
 import 'package:smart_notes/ui/strings.dart';
 
-import 'home_failure_view.dart';
-import 'home_loading_view.dart';
-import 'home_success_view.dart';
+import '../view/home_failure_view.dart';
+import '../view/home_loading_view.dart';
+import '../view/home_success_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

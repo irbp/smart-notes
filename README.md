@@ -43,10 +43,6 @@ The following packages were used in this project:
 - **[bloc_test](https://pub.dev/packages/bloc_test)**: A package for testing BLoCs and their interactions.
 - **[get_it](https://pub.dev/packages/get_it)**: A package for dependency injection and service location.
 
-## Screenshots 📷
-
-Add screenshots or GIFs showcasing your app's features. You can include code snippets as well.
-
 ## Installation ⚙️
 
 1. Clone the repository:

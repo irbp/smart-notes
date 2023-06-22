@@ -10,15 +10,25 @@ class HomeSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(16.0),
-      itemCount: notes.length,
-      itemBuilder: (context, index) {
-        return NoteCardView(notes[index]);
-      },
-      separatorBuilder: (context, index) {
-        return const SizedBox(height: 8.0);
-      },
-    );
+    if (notes.isEmpty) {
+      return Center(
+        child: Text(
+          'Nothing to see here.\nBegin by adding a new note!',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      );
+    } else {
+      return ListView.separated(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: notes.length,
+        itemBuilder: (context, index) {
+          return NoteCardView(notes[index]);
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(height: 8.0);
+        },
+      );
+    }
   }
 }

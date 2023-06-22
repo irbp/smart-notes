@@ -48,13 +48,13 @@ The following packages were used in this project:
 1. Clone the repository:
 
 ```console
-git clone https://github.com/irbp/smart-notes
+git clone https://github.com/irbp/smart-notes.git
 ```
 
 2. Navigate to the project directory:
 
 ```console
-cd smart_note
+cd smart-notes
 ```
 
 3. Install the dependencies:

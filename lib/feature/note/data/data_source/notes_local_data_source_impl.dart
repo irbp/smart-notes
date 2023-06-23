@@ -19,4 +19,10 @@ class NotesLocalDataSourceImpl implements NotesLocalDataSource {
     yield _noteBox.values.toList();
     yield* _noteBox.watch().map((event) => _noteBox.values.toList());
   }
+
+  @override
+  Future<void> removeNote(Note note) {
+    // TODO: implement removeNote
+    throw UnimplementedError();
+  }
 }

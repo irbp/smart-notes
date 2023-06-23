@@ -4,4 +4,6 @@ abstract class NotesLocalDataSource {
   Future<void> saveNote(Note note);
 
   Stream<List<Note>> getNotesStream();
+
+  Future<void> removeNote(Note note);
 }

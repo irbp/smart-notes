@@ -29,6 +29,8 @@ void main() {
         yield NoteBuilder.buildList();
       },
     );
+    when(() => notesLocalDataSourceMock.removeNote(any()))
+        .thenAnswer((_) async => '');
   });
 
   test('on save note, return success when no error is thrown', () async {
@@ -67,5 +69,23 @@ void main() {
     final actual = notesRepository.getNotesStream();
 
     expect(actual, emitsInOrder([expected]));
+  });
+
+  test('on remove note, return success when no error is thrown', () async {
+    final expected = Result.success('');
+
+    final actual = await notesRepository.removeNote(NoteBuilder.build());
+
+    expect(actual, equals(expected));
+  });
+
+  test('on remove note, return failure when a error is thrown', () async {
+    final expected = Result.error(GenericError());
+    when(() => notesLocalDataSourceMock.removeNote(any()))
+        .thenThrow(GenericError());
+
+    final actual = await notesRepository.removeNote(NoteBuilder.build());
+
+    expect(actual, equals(expected));
   });
 }

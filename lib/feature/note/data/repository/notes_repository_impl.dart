@@ -20,8 +20,7 @@ class NotesRepositoryImpl implements NotesRepository {
   Stream<List<Note>> getNotesStream() => _notesLocalDataSource.getNotesStream();
 
   @override
-  Future<Result<void, AppError>> removeNote(Note note) {
-    // TODO: implement removeNote
-    throw UnimplementedError();
+  Future<Result<void, AppError>> removeNote(Note note) async {
+    return asyncResultOf(() => _notesLocalDataSource.removeNote(note));
   }
 }

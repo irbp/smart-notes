@@ -11,7 +11,7 @@ class NotesLocalDataSourceImpl implements NotesLocalDataSource {
 
   @override
   Future<void> saveNote(Note note) async {
-    await _noteBox.add(note);
+    return await _noteBox.put(note.id.toString(), note);
   }
 
   @override
@@ -21,8 +21,7 @@ class NotesLocalDataSourceImpl implements NotesLocalDataSource {
   }
 
   @override
-  Future<void> removeNote(Note note) {
-    // TODO: implement removeNote
-    throw UnimplementedError();
+  Future<void> removeNote(Note note) async {
+    return await _noteBox.delete(note.id.toString());
   }
 }

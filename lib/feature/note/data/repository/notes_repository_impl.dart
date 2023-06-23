@@ -18,4 +18,10 @@ class NotesRepositoryImpl implements NotesRepository {
 
   @override
   Stream<List<Note>> getNotesStream() => _notesLocalDataSource.getNotesStream();
+
+  @override
+  Future<Result<void, AppError>> removeNote(Note note) {
+    // TODO: implement removeNote
+    throw UnimplementedError();
+  }
 }

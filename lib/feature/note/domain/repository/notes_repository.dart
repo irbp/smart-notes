@@ -7,4 +7,6 @@ abstract class NotesRepository {
   Future<Result<void, AppError>> saveNote(Note note);
 
   Stream<List<Note>> getNotesStream();
+
+  Future<Result<void, AppError>> removeNote(Note note);
 }

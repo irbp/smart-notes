@@ -19,8 +19,8 @@ class NoteBuilder {
   static Note build() {
     return const Note(
       id: 1,
-      title: 'Title Test',
-      description: 'Description Test',
+      title: 'Title Test 1',
+      description: 'Description Test 1',
     );
   }
 }

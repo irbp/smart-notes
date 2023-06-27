@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:smart_notes/feature/note/domain/use_case/remove_note_use_case.dart';
+import 'package:smart_notes/feature/note/domain/use_case/remove_note_use_case_impl.dart';
 import 'package:smart_notes/feature/note/domain/use_case/save_note_use_case.dart';
 import 'package:smart_notes/feature/note/domain/use_case/save_note_use_case_impl.dart';
 
@@ -11,5 +13,8 @@ void registerNoteDomainDependencies() {
   );
   GetIt.I.registerFactory<SaveNoteUseCase>(
     () => SaveNoteUseCaseImpl(notesRepository: GetIt.I()),
+  );
+  GetIt.I.registerFactory<RemoveNoteUseCase>(
+    () => RemoveNoteUseCaseImpl(notesRepository: GetIt.I()),
   );
 }

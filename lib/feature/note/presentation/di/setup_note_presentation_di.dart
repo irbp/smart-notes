@@ -13,7 +13,7 @@ void registerNotePresentationDependencies() {
     () => ErrorMapper(domainErrorMapper: GetIt.I<SaveNoteErrorMapper>()),
   );
   GetIt.I.registerFactory<HomeBloc>(
-    () => HomeBloc(getNotes: GetIt.I()),
+    () => HomeBloc(getNotes: GetIt.I(), removeNote: GetIt.I()),
   );
   GetIt.I.registerFactory<CreateNoteBloc>(
     () => CreateNoteBloc(

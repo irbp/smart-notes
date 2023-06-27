@@ -1,6 +1,17 @@
 class Strings {
   static const appName = 'Smart Notes';
+
   static const homeFailure = 'Oops!\nAn error has occurred!';
+  static const homeEmptyNotesMessage =
+      'Nothing to see here.\nBegin by adding a new note!';
+  static const homeNoteRemoved = 'Note removed successfully!';
+  static const homeRemoveNoteFailed =
+      'Oops! Failed to remove the note. Please try again';
+  static const homeRemoveNoteDialogTitle = 'Delete Note';
+  static const homeRemoveNoteDialogMessage =
+      'Are you sure you want to delete this note? This action cannot be undone.';
+  static const homeRemoveNoteDialogPositiveButton = 'Yes';
+  static const homeRemoveNoteDialogNegativeButton = 'No';
 
   static const createNoteTitle = 'Create note';
   static const createNoteTextFieldTitle = 'Title';
